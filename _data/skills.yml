@@ -1,0 +1,22 @@
+- name: Software Engineer Keywords
+  keywords:
+      - C&C++
+      - .NET
+      - Python
+      - Debug
+      - Linux
+      - Driver
+
+- name: Linux Developer Keywords
+  keywords:
+      - Android
+      - Driver
+      - Audio&Video
+
+- name: Windows Developer Keywords
+  keywords:
+      - Win32 SDK
+      - .NET
+      - Powershell
+      - COM
+      - WinDbg
