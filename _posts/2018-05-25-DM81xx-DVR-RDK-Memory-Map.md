@@ -6,13 +6,6 @@ description: DM81xx DVR RDK 中内存分布, 翻译自 DM81xx DVR_RDK Memory Map
 keywords: Davinci, DM8168, Memory
 ---
 
-
-原文地址：<http://blog.csdn.net/crushonme/article/details/14517109>
-
-迁移地址：http://crushone.github.io
-
-
-
 以下内容译自 DM81xx DVR_RDK Memory Map.pdf 文件。
 
  
