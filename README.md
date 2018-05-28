@@ -1,4 +1,4 @@
-# 码志
+# 路遥之家
 
 我的个人博客：<https://crushonme.github.io>。
 
