@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Netra McASP 接口介绍
+title: Netra 基于 RDK 平台的软件框架设计
 categories: Davinci
-description: McASP 接口介绍。
+description: Netra 基于 RDK 平台的软件框架设计。
 keywords: Davinci, DM8168, RDK
 ---
 
