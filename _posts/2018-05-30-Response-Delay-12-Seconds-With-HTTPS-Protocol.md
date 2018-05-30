@@ -6,11 +6,8 @@ description: 基于 .NET Framework 4.5 开发的 CS 架构系统，在使用过�
 keywords: HTTPS, Proxy
 ---
 
-```
-问题现象：
+问题现象：基于 .NET Framework 4.5 开发的 CS 架构系统，在使用过程中偶发出现 HTTPS 请求延迟 12 秒左右才到达服务器端。
 
-基于 .NET Framework 4.5 开发的 CS 架构系统，在使用过程中偶发出现 HTTPS 请求延迟 12 秒左右才到达服务器端。
-```
 
 一般而言对于 HTTPS 请求出现响应延迟通常需要抓取网络包分析排查。经过抓包确认，请求在第一时间发出并且 TLS 握手也正常进行，但一直未传送 Application Data，直到 11 秒后才将 Application Data 字段发送给 Server 端。
 
