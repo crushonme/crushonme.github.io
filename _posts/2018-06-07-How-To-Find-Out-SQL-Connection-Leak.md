@@ -13,9 +13,10 @@ keywords: Windbg，SQL，Connection Leak
 
 通常查看数据库连接泄露的 DUMP 可以通过以下几步定位：
 
-1.  查看 DUMP 中的性能计数器：
+1. 查看 DUMP 中的性能计数器：
 
    - 如果是 SQL 则通过命令 !mex.sqlclientperfcounters 获取；
+
    - 如果是 Oracle 则通过命令 !mex.oracleclientperfcounters 获取；
 
 2. 查看可能存在泄露的 SQL 命令：!mex.sqlcmd -l
