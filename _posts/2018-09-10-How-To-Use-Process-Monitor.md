@@ -2,8 +2,8 @@
 layout: post
 title: 如何使用 Process Monitor 排查问题
 categories: Windows Tools
-description: 本文介绍如何如何使用 Process Monitor 排查 Windows 中的问题。
-keywords: Procmon，GFLAG
+description: 本文介绍如何使用 Process Monitor 排查 Windows 中的问题。
+keywords: Procmon，Debug
 ---
 
 Process Monitor 是一款 Windows 平台的高级监控工具。它可以记录系统中注册表、文件和进城、线程的活动。功能上集合了 Sysinternals 组件中 FileMon 和 RegMon 的功能并添加了很多方便排查问题的实用功能，如过滤条件并且提供了丰富的事件属性，如 Session IDs 、用户名、进程信息、调用栈等等。这些特性使 Process Monitor成为 Windows 平台中不可或缺的神兵利刃。
