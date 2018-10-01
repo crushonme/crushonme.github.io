@@ -6,7 +6,8 @@ description: 本文介绍如何使用 Azure Sphere。
 keywords: Azure Sphere,Azure,Sphere,IoT,Microsoft IoT，Secure IoT，MT6320
 ---
 
-Azure Sphere 是一种用于创建高度安全、连接的微控制器 (MCU) 设备的解决方案，让人可以安心无忧并大胆地重新构想业务，创造未来。关于 Azure Sphere 详细介绍可以参考官方文章 [Azure Sphere | Microsoft Azure](https://azure.microsoft.com/zh-cn/services/azure-sphere/) 。 Azure Sphere 解决方案主要包含三个组件：
+Azure Sphere 是一种用于创建高度安全、连接的微控制器 (MCU) 设备的解决方案，让人可以安心无忧并大胆地重新构想业务，创造未来。关于 Azure Sphere 详细介绍可以参考官方文章 [Azure Sphere | Microsoft Azure](https://azure.microsoft.com/zh-cn/services/azure-sphere/) 。 
+Azure Sphere 解决方案主要包含三个组件：
 
 - Azure Sphere 认证的 MCU
 - Azure Sphere OS
