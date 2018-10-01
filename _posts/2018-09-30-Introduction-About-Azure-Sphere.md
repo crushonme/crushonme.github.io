@@ -13,7 +13,7 @@ Azure Sphere 解决方案主要包含三个组件：
 - Azure Sphere OS
 - Azure Sphere 安全服务
 
-第一款 Azure Sphere MCU 出自于 Microsoft 与 MediaTek 合作的 MT6320AN，其搭载 Arm Cortex-A7 应用处理器和双核带有 FPU 的 Cortex-M4，运行频率为 500MHz，片上 I/O 资源主要包含5 个 UART/I2C/SPI、2 个 12S、8 个 ADC、最多 12 个 PWM 计数器以及高达最多 72 个 GPIO。关于其详细介绍可以看 MediaTek 的详细介绍 [MT6320AN](https://www.mediatek.cn/products/azureSphere/mt3620)
+第一款 Azure Sphere MCU 是 Microsoft 与 MediaTek 合作的 MT6320AN，其搭载 Arm Cortex-A7 应用处理器和双核带有 FPU 的 Cortex-M4，运行频率为 500MHz，片上 I/O 资源主要包含5 个 UART/I2C/SPI、2 个 12S、8 个 ADC、最多 12 个 PWM 计数器以及高达最多 72 个 GPIO。关于其详细介绍可以看 MediaTek 的详细介绍 [MT6320AN](https://www.mediatek.cn/products/azureSphere/mt3620)
 
 Azure Sphere OS 是基于 Yocto 定制的 Linux 系统，版本号为 4.9，在文档 [开始使用 Azure Sphere](https://azure.microsoft.com/zh-cn/services/azure-sphere/get-started/) 中的第三方披露部分提供了源码。![Azure Sphere Third Party Source](\images\blog\AzureSphereThirdPartySource.jpg)
 
@@ -73,7 +73,7 @@ Azure Sphere OS 是基于 Yocto 定制的 Linux 系统，版本号为 4.9，在�
 - Azure Sphere 开发仅支持 C 语言，**不支持 C++**；
 - Azure Sphere 同一时刻仅能运行一个用户应用；用户应用在系统启动或者异常退出时，系统会自动启动用户应用程序；用户应用仅能在系统发出信号时退出；
 - Azure Sphere 用户应用程序最大可用 Flash 大小为 512KB，A7 侧最大运行时 RAM 大小为 256KB；
-- 用户应用程序如果需要操作硬件资源必须在 [Application manifest](https://docs.microsoft.com/en-us/azure-sphere/app-development/app-manifest) 中声明，否则无法正常使用硬件资源，炳辉在 errno 中得到 Access Denied 报错；
+- 用户应用程序如果需要操作硬件资源必须在 [Application manifest](https://docs.microsoft.com/en-us/azure-sphere/app-development/app-manifest) 中声明，否则无法正常使用硬件资源，并会在 errno 中得到 Access Denied 报错；
 
 # Azure Sphere 库
 
