@@ -53,4 +53,7 @@ keywords: Procmon，Debug
 
 1. 移除 DLP 的 Chrome 扩展组件，验证问题是否存在；
 2. 将 C:\Program Files\Microsoft Silverlight\5.1.50709.0 加入环境变量 Path 中绕过该问题；
-3. 联系 Symantec 确认其 DLP Chrome 扩展组件在 Hook Kernel32!LoadLibraryW 时的具体行为；
+3. 联系 MacAfee 确认其 DLP Chrome 扩展组件在 Hook Kernel32!LoadLibraryW 时的具体行为；
+
+
+

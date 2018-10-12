@@ -1,1 +1,28 @@
-<div class="share-component"></div>
+<link rel="stylesheet" href="{{ site.url }}/assets/css/globals/donate.css">
+<button class="reward" data-toggle="modal" data-target="#myModal">
+    打赏
+</button>
+<div align='center'><p>如果您觉得我的文章对您有帮助,欢迎点击上方按钮对我打赏</p></div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="myModalLabel">
+                    「真诚赞赏，手留余香」
+                </h2>
+            </div>
+            <div class="modal-body" align="center">
+                <img style="display:inline;margin-right:10px" src="{{ site.url }}/images/icons/Wechat-200x200.png" alt="weixin">
+                <img style="display:inline;margin-left:10px"  src="{{ site.url }}/images/icons/AliPay-200x200.png" alt="zhifubao">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<div class="share-component" align='center'></div>
