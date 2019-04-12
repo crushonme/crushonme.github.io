@@ -78,7 +78,11 @@ LRESULT CALLBACK CWindowImplBaseT< TBase, TWinTraits >::StartWindowProc(
 对于该问题，规避方法有以下三种，但最终如果想彻底解决该问题，则需要升级 ATL 组件到更高版本，以便生成 DEP-Aware 的应用：
 
 1. 系统级别禁用 DEP，该方法不推荐，因为禁用全局 DEP，会带来安全隐患；
-2. 应用级别移除 IMAGE_DLLCHARACTERISTICS_NX_COMPAT 标识；
+
+2. 应用级别移除_NX_COMPAT 标识；
+
+   editbin test.exe /NXCOMPAT:NO
+
 3. 通过 [SetProcessDEPPolicy](https://docs.microsoft.com/en-us/windows/desktop/api/WinBase/nf-winbase-setprocessdeppolicy) 修改 DEP 策略；
 
 IE 中使用 SetProcessDEPPolicy 方式来提高对ATL的兼容性，详细参考文章 [Understanding DEP and NX](https://blogs.msdn.microsoft.com/ieinternals/2009/10/10/understanding-depnx/ )
