@@ -13,7 +13,7 @@ keywords: IIS 8.5, Advancced Logging
 
  按照其官方文档说明，该插件仅适用于 IIS 7/7.5/8 三个版本，实际也可以在 IIS 8.5 中安装。 但对于 IIS 10 则无法正常安装。
 
- # 问题现象：
+# 问题现象：
 在 IIS 8.5 环境中安装 Advanced Logging 功能是弹窗提示 "IIS version 7.0 is required to use IIS advanced logging 1.0"
 
 # 问题分析
