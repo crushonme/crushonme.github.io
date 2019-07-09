@@ -15,7 +15,7 @@ keywords: IIS 8.5, Advancced Logging
 
  # 问题现象：
 在 IIS 8.5 环境中安装 Advanced Logging 功能是弹窗提示 "IIS version 7.0 is required to use IIS advanced logging 1.0"
- 
+
 # 问题分析
 出现该问题首先想到的是查阅文档，检查 Advanced Logging 功能支持的 IIS 版本。 在 [Advanced Logging Readme](https://docs.microsoft.com/en-us/iis/extensions/advanced-logging-module/advanced-logging-readme#installation-notes) 文档中列出了前提条件：
 - IIS 主版本号必须为 7 
@@ -27,89 +27,90 @@ keywords: IIS 8.5, Advancced Logging
 
 由于当前问题本地无法重现问题且提示的信息和 IIS 版本相关，因此我们大胆猜测此处的版本来自于注册表并且弹框提示会调用 MessageBox。 因此排查问题第一步，抓取 Process Monitor 日志 并在弹出框时抓取Dump 分析。
 - 由于分析 Process Monitor 非常耗时，而且线索较难寻找，因此先看看 Dump 中是否有弹框相关的调用栈：
-```
-0:000> ~*kcL
 
-.  0  Id: 86d5c.7220c Suspend: 0 Teb: 00007ff7`7a43d000 Unfrozen
- # Call Site
-00 user32!ZwUserGetMessage
-01 user32!GetMessageW
-02 msihnd!CMsiDialog::Execute
-03 msihnd!CMsiHandler::Message
-04 msi!MsiUIMessageContext::ProcessMessage
-05 msi!MsiUIMessageContext::RunInstall
-06 msi!RunEngine
-07 msi!MsiInstallProductW
-08 msiexec!DoInstallPackage
-09 msiexec!ServerMain
-0a msiexec!WinMain
-0b msiexec!__mainCRTStartup
-0c kernel32!BaseThreadInitThunk
-0d ntdll!RtlUserThreadStart
+  ```
+    0:000> ~*kcL
 
-   1  Id: 86d5c.89a24 Suspend: 0 Teb: 00007ff7`7a43b000 Unfrozen
- # Call Site
-00 ntdll!ZwWaitForMultipleObjects
-01 KERNELBASE!WaitForMultipleObjectsEx
-02 user32!RealMsgWaitForMultipleObjectsEx
-03 user32!MsgWaitForMultipleObjectsEx
-04 user32!MsgWaitForMultipleObjects
-05 msi!MsiUIMessageContext::Invoke
-06 msi!CMsiEngine::Message
-07 msi!LaunchConditions
-08 msi!CMsiEngine::FindAndRunAction
-09 msi!CMsiEngine::DoAction
-0a msi!CMsiEngine::Sequence
-0b msi!RunUIOrExecuteSequence
-0c msi!CMsiEngine::FindAndRunAction
-0d msi!CMsiEngine::DoAction
-0e msi!CreateAndRunEngine
-0f msi!MsiUIMessageContext::MainEngineThread
-10 kernel32!BaseThreadInitThunk
-11 ntdll!RtlUserThreadStart
+    .  0  Id: 86d5c.7220c Suspend: 0 Teb: 00007ff7`7a43d000 Unfrozen
+     # Call Site
+    00 user32!ZwUserGetMessage
+    01 user32!GetMessageW
+    02 msihnd!CMsiDialog::Execute
+    03 msihnd!CMsiHandler::Message
+    04 msi!MsiUIMessageContext::ProcessMessage
+    05 msi!MsiUIMessageContext::RunInstall
+    06 msi!RunEngine
+    07 msi!MsiInstallProductW
+    08 msiexec!DoInstallPackage
+    09 msiexec!ServerMain
+    0a msiexec!WinMain
+    0b msiexec!__mainCRTStartup
+    0c kernel32!BaseThreadInitThunk
+    0d ntdll!RtlUserThreadStart
 
-   2  Id: 86d5c.89a94 Suspend: 0 Teb: 00007ff7`7a30e000 Unfrozen
- # Call Site
-00 ntdll!ZwWaitForWorkViaWorkerFactory
-01 ntdll!TppWorkerThread
-02 kernel32!BaseThreadInitThunk
-03 ntdll!RtlUserThreadStart
+       1  Id: 86d5c.89a24 Suspend: 0 Teb: 00007ff7`7a43b000 Unfrozen
+     # Call Site
+    00 ntdll!ZwWaitForMultipleObjects
+    01 KERNELBASE!WaitForMultipleObjectsEx
+    02 user32!RealMsgWaitForMultipleObjectsEx
+    03 user32!MsgWaitForMultipleObjectsEx
+    04 user32!MsgWaitForMultipleObjects
+    05 msi!MsiUIMessageContext::Invoke
+    06 msi!CMsiEngine::Message
+    07 msi!LaunchConditions
+    08 msi!CMsiEngine::FindAndRunAction
+    09 msi!CMsiEngine::DoAction
+    0a msi!CMsiEngine::Sequence
+    0b msi!RunUIOrExecuteSequence
+    0c msi!CMsiEngine::FindAndRunAction
+    0d msi!CMsiEngine::DoAction
+    0e msi!CreateAndRunEngine
+    0f msi!MsiUIMessageContext::MainEngineThread
+    10 kernel32!BaseThreadInitThunk
+    11 ntdll!RtlUserThreadStart
 
-   3  Id: 86d5c.89e90 Suspend: 0 Teb: 00007ff7`7a30c000 Unfrozen
- # Call Site
-00 ntdll!ZwWaitForMultipleObjects
-01 KERNELBASE!WaitForMultipleObjectsEx
-02 crypt32!ILS_WaitForThreadProc
-03 kernel32!BaseThreadInitThunk
-04 ntdll!RtlUserThreadStart
+       2  Id: 86d5c.89a94 Suspend: 0 Teb: 00007ff7`7a30e000 Unfrozen
+     # Call Site
+    00 ntdll!ZwWaitForWorkViaWorkerFactory
+    01 ntdll!TppWorkerThread
+    02 kernel32!BaseThreadInitThunk
+    03 ntdll!RtlUserThreadStart
 
-   4  Id: 86d5c.82dfc Suspend: 0 Teb: 00007ff7`7a30a000 Unfrozen
- # Call Site
-00 ntdll!ZwWaitForWorkViaWorkerFactory
-01 ntdll!TppWorkerThread
-02 kernel32!BaseThreadInitThunk
-03 ntdll!RtlUserThreadStart
+       3  Id: 86d5c.89e90 Suspend: 0 Teb: 00007ff7`7a30c000 Unfrozen
+     # Call Site
+    00 ntdll!ZwWaitForMultipleObjects
+    01 KERNELBASE!WaitForMultipleObjectsEx
+    02 crypt32!ILS_WaitForThreadProc
+    03 kernel32!BaseThreadInitThunk
+    04 ntdll!RtlUserThreadStart
 
-   5  Id: 86d5c.89f80 Suspend: 0 Teb: 00007ff7`7a308000 Unfrozen
- # Call Site
-00 ntdll!ZwWaitForWorkViaWorkerFactory
-01 ntdll!TppWorkerThread
-02 kernel32!BaseThreadInitThunk
-03 ntdll!RtlUserThreadStart
+       4  Id: 86d5c.82dfc Suspend: 0 Teb: 00007ff7`7a30a000 Unfrozen
+     # Call Site
+    00 ntdll!ZwWaitForWorkViaWorkerFactory
+    01 ntdll!TppWorkerThread
+    02 kernel32!BaseThreadInitThunk
+    03 ntdll!RtlUserThreadStart
 
-   6  Id: 86d5c.89164 Suspend: 0 Teb: 00007ff7`7a306000 Unfrozen
- # Call Site
-00 ntdll!ZwWaitForMultipleObjects
-01 KERNELBASE!WaitForMultipleObjectsEx
-02 combase!WaitCoalesced
-03 combase!CROIDTable::WorkerThreadLoop
-04 combase!CRpcThread::WorkerLoop
-05 combase!CRpcThreadCache::RpcWorkerThreadEntry
-06 kernel32!BaseThreadInitThunk
-07 ntdll!RtlUserThreadStart
+       5  Id: 86d5c.89f80 Suspend: 0 Teb: 00007ff7`7a308000 Unfrozen
+     # Call Site
+    00 ntdll!ZwWaitForWorkViaWorkerFactory
+    01 ntdll!TppWorkerThread
+    02 kernel32!BaseThreadInitThunk
+    03 ntdll!RtlUserThreadStart
 
-似乎运气不太好，看上去调用栈中并没有弹窗相关的函数。不过在86d5c.89a24 线程调用栈中似乎在查找 LaunchConditions；
-```
+       6  Id: 86d5c.89164 Suspend: 0 Teb: 00007ff7`7a306000 Unfrozen
+     # Call Site
+    00 ntdll!ZwWaitForMultipleObjects
+    01 KERNELBASE!WaitForMultipleObjectsEx
+    02 combase!WaitCoalesced
+    03 combase!CROIDTable::WorkerThreadLoop
+    04 combase!CRpcThread::WorkerLoop
+    05 combase!CRpcThreadCache::RpcWorkerThreadEntry
+    06 kernel32!BaseThreadInitThunk
+    07 ntdll!RtlUserThreadStart
+
+    似乎运气不太好，看上去调用栈中并没有弹窗相关的函数。不过在86d5c.89a24 线程调用栈中似乎在查找 LaunchConditions；
+  ```
 - 既然DUMP 中未看到明显的线索，那就检查 Process Monitor 日志看是否能找出些蛛丝马迹
   - 用 path 以 version 开头或者结尾为条件过滤，发现其中一条记录如下，使用标签功能标记该记录：
   >msiexec.exe	RegQueryValue	HKLM\SOFTWARE\Microsoft\INETSTP\MajorVersion	SUCCESS	Type: REG_DWORD, Length: 4, Data: 8	
@@ -128,7 +129,7 @@ keywords: IIS 8.5, Advancced Logging
     MSI (c) (48:FC) [16:45:13:728]: Doing action: FatalError
     Action 16:45:13: FatalError. 
     Action start 16:45:13: FatalError.
-   ```
+  ```
 - 在安装过程中检查 LaunchConditions 时抛出 "IIS Version 7.0 is required to use IIS Advanced Logging 1.0"。此时我们要思考的是 Advanced Logging 的安装包的 LaunchConditions 是什么？经过一番搜索和思考，我们找到以下两篇文档 [From MSI to WiX, Part 3 – Launch Conditions and Application Search](https://blogs.technet.microsoft.com/alexshev/2008/02/10/from-msi-to-wix-part-3-launch-conditions-and-application-search/) 和[LaunchCondition Table](https://docs.microsoft.com/en-us/windows/win32/msi/launchcondition-table)。 从对应的文档中我们可以知道在 MSI 的文件中存在一个数据库，其中记录了很多的安装信息，如安装条件，执行顺序，回滚方法等等；
 - 紧接着我们肯定会想到的就是如何从 MSI 文件中找到对应的数据库，又经过一番搜索，我们可以找到 [MSI Explorer](https://blogs.technet.microsoft.com/sateesh-arveti/2010/11/20/msi-explorer/)。 通过 MSI Explorer 可以看到 Advanced Logging 组件的 LaunchCondition 中可能抛出 "IIS Version 7.0 is required to use IIS Advanced Logging 1.0" 报错有两种
   ![](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/LaunchCondition.png)
