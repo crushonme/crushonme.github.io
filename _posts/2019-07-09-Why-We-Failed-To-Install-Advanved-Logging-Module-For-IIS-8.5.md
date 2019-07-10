@@ -5,7 +5,7 @@ categories: IIS
 description: 本文介绍如何如何找出 IIS8.5 无法安装 Advanced Logging 组件的原因。
 keywords: IIS 8.5, Advancced Logging
 ---
-本文分析并记录了一个在 IIS 8.5 环境中安装 Advanced Logging 功能失败原因的分析过程。Advanced Logging 功能是 IIS 的插件，是 IIS 内置日志功能的增强版本，其主要增加了以下几个特性：
+本文记录了一个在 IIS 8.5 环境中安装 Advanced Logging 功能失败原因的分析过程。Advanced Logging 功能是 IIS 的插件，是 IIS 内置日志功能的增强版本，其主要增加了以下几个特性：
  - 自定义日志项；
  - 日志过滤功能；
  - 实时日志处理机制，可供自动化分析工具使用；
@@ -116,7 +116,7 @@ keywords: IIS 8.5, Advancced Logging
   >msiexec.exe	RegQueryValue	HKLM\SOFTWARE\Microsoft\INETSTP\MajorVersion	SUCCESS	Type: REG_DWORD, Length: 4, Data: 8	
   - 移除上述条件，观察该记录上下文的记录，发现在访问该注册表后写了日志文件：
   >msiexec.exe	WriteFile	C:\Users\xx\AppData\Local\Temp\4\MSI26823.LOG	SUCCESS	Offset: 59,696, Length: 366, Priority: Normal	
-- 当我们熟悉 MSI 安装程序时，第一步想到的应该是打开日志记录功能，排查详细日志。我们再绕了一大圈后也找到了对应的日志记录；
+- 当我们熟悉 MSI 安装程序时，第一步想到的应该是打开日志记录功能，排查详细日志。我们在绕了一大圈后也找到了对应的日志记录；
 - 检查对应日志，我们会发现如下记录：
   ```
     MSI (c) (48:FC) [16:45:12:302]: Doing action: LaunchConditions
@@ -138,5 +138,5 @@ keywords: IIS 8.5, Advancced Logging
   ![](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/AppSearch.png)
   ![](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/RegLocator.png)
 - 目前为止我们已经了解到当前问题是由于注册表 [HKLM\SOFTWARE\Microsoft\INETSTP\Components\W3SVC] 和 [HKLM\SOFTWARE\Microsoft\INETSTP\Components\ManagementConsole] 为空导致，因此我们需要了解这两项注册表分别代表什么含义；此处我们再次需要搜索相关的资料, 在 IIS 的文档 [Discover Installed Components](https://docs.microsoft.com/en-us/iis/install/installing-iis-7/discover-installed-components) 中列出了对应的注册表项含义， W3SVC 和 ManagementConsole 分别代表 "Web Server" 和 "IIS Management Console"; 而这两项为 IIS 的核心组件。
-- 至此我们基本的除了该问题的可能原因：注册表损坏
+- 至此我们基本得出了该问题的可能原因：注册表损坏
   
