@@ -8,8 +8,6 @@ menu: 关于
 permalink: /about/
 ---
 
-我是Robin, 微软 Dev 技术支持工程师
-
 
 ## 联系
 
