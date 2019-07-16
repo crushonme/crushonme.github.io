@@ -111,12 +111,15 @@ keywords: IIS 8.5, Advancced Logging
 
     似乎运气不太好，看上去调用栈中并没有弹窗相关的函数。不过在86d5c.89a24 线程调用栈中似乎在查找 LaunchConditions；
   ```
+  
 - 既然DUMP 中未看到明显的线索，那就检查 Process Monitor 日志看是否能找出些蛛丝马迹
   - 用 path 以 version 开头或者结尾为条件过滤，发现其中一条记录如下，使用标签功能标记该记录：
   >msiexec.exe	RegQueryValue	HKLM\SOFTWARE\Microsoft\INETSTP\MajorVersion	SUCCESS	Type: REG_DWORD, Length: 4, Data: 8	
   - 移除上述条件，观察该记录上下文的记录，发现在访问该注册表后写了日志文件：
   >msiexec.exe	WriteFile	C:\Users\xx\AppData\Local\Temp\4\MSI26823.LOG	SUCCESS	Offset: 59,696, Length: 366, Priority: Normal	
+  
 - 当我们熟悉 MSI 安装程序时，第一步想到的应该是打开日志记录功能，排查详细日志。我们在绕了一大圈后也找到了对应的日志记录；
+
 - 检查对应日志，我们会发现如下记录：
   ```
     MSI (c) (48:FC) [16:45:12:302]: Doing action: LaunchConditions
@@ -130,13 +133,29 @@ keywords: IIS 8.5, Advancced Logging
     Action 16:45:13: FatalError. 
     Action start 16:45:13: FatalError.
   ```
+  
 - 在安装过程中检查 LaunchConditions 时抛出 "IIS Version 7.0 is required to use IIS Advanced Logging 1.0"。此时我们要思考的是 Advanced Logging 的安装包的 LaunchConditions 是什么？经过一番搜索和思考，我们找到以下两篇文档 [From MSI to WiX, Part 3 – Launch Conditions and Application Search](https://blogs.technet.microsoft.com/alexshev/2008/02/10/from-msi-to-wix-part-3-launch-conditions-and-application-search/) 和[LaunchCondition Table](https://docs.microsoft.com/en-us/windows/win32/msi/launchcondition-table)。 从对应的文档中我们可以知道在 MSI 的文件中存在一个数据库，其中记录了很多的安装信息，如安装条件，执行顺序，回滚方法等等；
+
 - 紧接着我们肯定会想到的就是如何从 MSI 文件中找到对应的数据库，又经过一番搜索，我们可以找到 [MSI Explorer](https://blogs.technet.microsoft.com/sateesh-arveti/2010/11/20/msi-explorer/)。 通过 MSI Explorer 可以看到 Advanced Logging 组件的 LaunchCondition 中可能抛出 "IIS Version 7.0 is required to use IIS Advanced Logging 1.0" 报错有两种
   ![](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/LaunchCondition.png)
+  
 - 结合 MSI 安装日志，则很容易知道是由于属性 IISW3SVCINSTALLED 和 IISMANAGEMENTCONSOLEINSTALLED 为空导致； ![](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/AdvancedLoggingMSILog.png)
+
 - MSI 中的属性在 AppSearch 表中可以找到对应的 Signature, 而对应的资源在  CompLocator, DrLocator, RegLocator, 和 IniLocator  中找到其实际对应的资源。详细解释参考 [From MSI to WiX, Part 3 – Launch Conditions and Application Search](https://blogs.technet.microsoft.com/alexshev/2008/02/10/from-msi-to-wix-part-3-launch-conditions-and-application-search/)
   ![](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/AppSearch.png)
   ![](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/RegLocator.png)
-- 目前为止我们已经了解到当前问题是由于注册表 [HKLM\SOFTWARE\Microsoft\INETSTP\Components\W3SVC] 和 [HKLM\SOFTWARE\Microsoft\INETSTP\Components\ManagementConsole] 为空导致，因此我们需要了解这两项注册表分别代表什么含义；此处我们再次需要搜索相关的资料, 在 IIS 的文档 [Discover Installed Components](https://docs.microsoft.com/en-us/iis/install/installing-iis-7/discover-installed-components) 中列出了对应的注册表项含义， W3SVC 和 ManagementConsole 分别代表 "Web Server" 和 "IIS Management Console"; 而这两项为 IIS 的核心组件。
-- 至此我们基本得出了该问题的可能原因：注册表损坏
   
+- 目前为止我们已经了解到当前问题是由于注册表 [HKLM\SOFTWARE\Microsoft\INETSTP\Components\W3SVC] 和 [HKLM\SOFTWARE\Microsoft\INETSTP\Components\ManagementConsole] 为空导致，因此我们需要了解这两项注册表分别代表什么含义；此处我们再次需要搜索相关的资料, 在 IIS 的文档 [Discover Installed Components](https://docs.microsoft.com/en-us/iis/install/installing-iis-7/discover-installed-components) 中列出了对应的注册表项含义， W3SVC 和 ManagementConsole 分别代表 "Web Server" 和 "IIS Management Console"; 而这两项为 IIS 的核心组件。
+
+- 至此我们基本得出了该问题的可能原因：注册表损坏。检查验证发现的确上述的注册表的确已经不存在，手动添加后，则可以正常安装。
+  
+  
+# 为何 IIS 10 无法安装
+通过前面的排查，可以知道产生 "IIS Version 7.0 is required to use IIS Advanced Logging 1.0" 有两种情况，如下：
+“(IISMAJORVERSION >= "#7") OR (Installed)”  
+“((IISCOREWEBENGINEINSTALLED = "#1") AND (IISW3SVCINSTALLED = "#1")) OR (Installed)”
+
+其中第二条，在 Win10 下完全满足。但是对于第一条，如果当作 String 类型比较时，则比较 "#10" >= "7"，此时判断结果取决于实际计算方案。对于Advanced Logging 模块，我们发现如果将 IISMAJORVERSION 对应的注册表键值修改为高于 6 且小于 10 的数值，即可规避该检查。但是否影响 Advanced Logging 模块的功能，目前无法做全面的测试。 考虑到后续的可维护性和持续性，建议尽快迁移至 IIS 支持的 Customized Logging 模块，对于 Customized Logging 缺少的功能，可以自行开发对应的 IIS Module 来实现其功能。
+
+>参考文章： [Conditional Statement Syntax](https://docs.microsoft.com/en-us/windows/win32/msi/conditional-statement-syntax)
+
