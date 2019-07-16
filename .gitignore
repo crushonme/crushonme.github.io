@@ -6,3 +6,6 @@ _site/
 .DS_Store
 Gemfile.lock
 Thumbs.db
+*.csv
+*.xls
+*.xlsx
