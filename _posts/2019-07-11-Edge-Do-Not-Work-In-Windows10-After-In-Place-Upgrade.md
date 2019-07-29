@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 从 Win7 升级到 Win10 后 Edge 无法正常浏览网页
-categories: IIS
+categories: browser
 description: 本文分析了一个 Edge 无法打开网页的问题原因。
 keywords: In-Place-update, Edge
 ---
