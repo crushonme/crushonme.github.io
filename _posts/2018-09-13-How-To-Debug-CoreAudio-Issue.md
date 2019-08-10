@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Core Audio API 相关问题如何排查
-categories: Audio,Windows
+categories: Audio Windows
 description: 本文介绍一般遇到 Core Audio 问题如何排查。
 keywords: Procmon,Debug
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: AWS 中使用 ALB/ELB 导致使用 Windows Authentication 的 ASP.NET 程序中获取到错误的 Identity 信息
-categories: Windows, ASP.NET
+categories: Windows ASP.NET
 description: 本文介绍如何规避 AWS 中使用 ALB/ELB 时遇到的 Windows Authentication 问题。
 keywords: Windows Authentication,NTLM,Kerberos
 ---
