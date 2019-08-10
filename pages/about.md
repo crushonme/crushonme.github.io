@@ -8,6 +8,7 @@ menu: 关于
 permalink: /about/
 ---
 
+我是 Robin Chen, 做了一年硬件，三年嵌入式驱动，一年安卓框架和驱动，三年 Windows 开发技术支持。熟悉 Linux 和 Windows 驱动开发，对于 Windows 平台调试技术涉猎较多。
 
 ## 联系
 
