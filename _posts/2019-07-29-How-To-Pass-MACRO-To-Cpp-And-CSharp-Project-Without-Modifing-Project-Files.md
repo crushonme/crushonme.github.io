@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 如何在不修改工程文件的前提下通过 MSBuild 添加宏定义
-categories: Visual Studio
+categories: VisualStudio
 description: 本文举例说明如何在不修改工程文件的前提下通过 MSBuild 添加宏定义。
 keywords: Msbuild, CI,VisualStudio
 ---
