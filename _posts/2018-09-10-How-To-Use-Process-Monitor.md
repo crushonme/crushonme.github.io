@@ -90,3 +90,5 @@ Process Monitor 是一款 Windows 平台的高级监控工具。它可以记录�
 2. 双击事件并选择 Stack 列，则可以看到对应的调用栈，该功能部分场景下只有 public symbol 时意义不大，但如果有 private symbol 则如虎添翼；
 
    ![Stack](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/Stack.png)
+
+3. 如果通过以上设置后未能正常加载 Symbol ，请将 dbghelp.dll 路径设置为 Windbg 中使用的dbghelp.dll。
