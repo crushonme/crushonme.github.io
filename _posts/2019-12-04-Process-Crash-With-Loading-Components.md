@@ -46,8 +46,8 @@ keywords: Code Integrity, UMCI, Device Guard, 0x060c201e
 
 <img src="https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/LdrAppxHandleIntegrityFailure.png" alt="LdrAppxHandleIntegrityFailure" style="zoom:100%;" />
 
+> 关于如何在 Process Monitor 中加载调用栈可以参考前面的文章 [如何查看调用栈]([https://crushonme.github.io/2018/09/10/How-To-Use-Process-Monitor/#%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%B0%83%E7%94%A8%E6%A0%88](https://crushonme.github.io/2018/09/10/How-To-Use-Process-Monitor/#如何查看调用栈))
 
-
-基于前面的信息我们可以半段该问题是由于 Code  Integrity 的设置导致崩溃，那我们就需要去检查 [Code Integrity 的日志](https://docs.microsoft.com/en-us/windows-hardware/drivers/install/viewing-code-integrity-events)确认真正的原因。通过检查 Code Integrity 的日志可以知道该问题是由于对应的模块的签名级别不满足企业要求。因此使用满足该企业要求证书重新对模块做签名即可。
+基于前面的信息我们可以半段该问题是由于 Code  Integrity 的设置导致崩溃，那我们就需要去检查 [Code Integrity 的日志](https://docs.microsoft.com/en-us/windows-hardware/drivers/install/viewing-code-integrity-events)确认真正的原因。通过检查 Code Integrity 的日志可以知道该问题是由于对应的模块的签名级别不满足企业要求。因此使用满足该企业要求证书重新对模块做签名即可。关于 Code Integrity 相关内容可以参考文章 [Getting Started with Windows 10 Device Guard](https://blogs.technet.microsoft.com/ukplatforms/2017/04/04/getting-started-with-windows-10-device-guard-part-1-of-2/)。
 
 ![CodeIntegrityError3303](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/CodeIntegrityErrorEvent3033.png)
