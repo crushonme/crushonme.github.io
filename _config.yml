@@ -75,6 +75,7 @@ plugins:
     - jekyll-sitemap
     - jekyll-feed
     - jemoji
+    - jekyll-multiple-languages-plugin
 #     - jekyll-mentions
 collections:
     wiki:
