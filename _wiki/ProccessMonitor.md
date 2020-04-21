@@ -13,7 +13,7 @@ keywords: Procmon
 
 - Run CMD as Administrator and run below command:
 
-  ```
+  ```CMD
   mkdir C:\temp
   Procmon /backingfile C:\temp\logfile.pml /AcceptEula /Minimized /Quiet
   ```
@@ -22,7 +22,7 @@ keywords: Procmon
 
 - After the issue happens, run below command in previours CMD window
 
-  ```
+  ```CMD
   prcmon /terminate
   ```
 
@@ -48,7 +48,3 @@ keywords: Procmon
 
 3. 重启机器并复现问题，当系统启动后运行 Process Monitor，此时会提示 Boot-Time 活动已经记录，是否保存数据，保存对应的日志即可：
    ![EnableBootLoggingPromopt](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/EnableBootLoggingPromopt.png)
-
-
-
-

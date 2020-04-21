@@ -10,7 +10,8 @@ keywords: WER,Windows Error Reporting
 ## Collect WER Dump with Registry Script
 
 - Copy below content to notepad and save as WER.reg;
-  ```
+
+  ```REG
   Windows Registry Editor Version 5.00
 
   [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\iexplore.exe]
@@ -37,7 +38,8 @@ keywords: WER,Windows Error Reporting
 ## 使用注册表脚本收集完成 WER DUMP
 
 - 将以下内容复制到 Notepad 中并保存为 WER.reg;
-  ```
+
+  ```REG
   Windows Registry Editor Version 5.00
 
   [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\iexplore.exe]
@@ -80,4 +82,3 @@ keywords: WER,Windows Error Reporting
   > DumpFolder 根据实际情况选择合适路径即可，在配置注册表前，请先创建该文件夹。
 
 - 在问题复现后，程序崩溃的 DUMP 将会生成在 DumpFolder 键值对应的文件夹下。
-

@@ -12,7 +12,7 @@ keywords: IE11, Web Browser
 
 - Save below content to DisableLCIE.reg and then merge the registry script
 
-  ```
+  ```REG
   Windows Registry Editor Version 5.00
 
   [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Main]
@@ -29,7 +29,7 @@ keywords: IE11, Web Browser
 
 - Save below content to EnableLCIE.reg and then merge the registry script
 
-  ```
+  ```REG
   Windows Registry Editor Version 5.00
 
   [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Internet Explorer\Main]

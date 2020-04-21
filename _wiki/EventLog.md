@@ -33,7 +33,7 @@ keywords: Debug, Event Log
 
 ## 命令行收集事件日志
 
-```
+```CMD
 wevtutil epl System C:\temp\system.evtx
 wevtutil epl Application C:\temp\Application.evtx
 ```

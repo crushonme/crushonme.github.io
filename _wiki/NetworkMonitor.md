@@ -32,7 +32,7 @@ keywords: netmon,Network Monitor
 
 - 以管理员权限运行 CMD并运行以下命令抓取网络包，该命令会每隔 200M 拆分一个文件存储；
 
-  ```
+  ```CMD
   mkdir C:\temp
   nmcap /netrwork * /capture /file C:\temp\netmon.chn:200MB
   ```
@@ -49,14 +49,14 @@ keywords: netmon,Network Monitor
 
 - Begin to capture netmon log (Open a cmd window, run command as below):
 
-  ```
+  ```CMD
   md c:\temp
   nmcap /network * /capture /file c:\temp\netmon.cap
   ```
   
   If we want to limit the file size of each capture file generated, use below command instead:
 
-  ```
+  ```CMD
   nmcap /netrwork * /capture /file C:\temp\netmon.chn:200MB
   ```
 
