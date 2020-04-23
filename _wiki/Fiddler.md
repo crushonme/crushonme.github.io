@@ -1,3 +1,10 @@
+---
+layout: wiki
+title: How To Capture Fiddler日志
+categories: Debug
+description: 本文描述各种场景下抓取 Fiddler 的方法
+keywords: Fiddler,iOS,Android
+---
 # 如何使用 Fiddler 收集 HTTP/HTTPS 流量
 
 ## Windows 平台收集 Fiddler 日志步骤
