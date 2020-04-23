@@ -1,6 +1,6 @@
 ---
 layout: wiki
-title: How To Capture Fiddler日志
+title: How To Capture Fiddler Log
 categories: Debug
 description: 本文描述各种场景下抓取 Fiddler 的方法
 keywords: Fiddler,iOS,Android
