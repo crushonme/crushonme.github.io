@@ -5,6 +5,7 @@ categories: Debug
 description: 如何收集 Performance Counter
 keywords: Performance Counter
 ---
+
 # Performance Counter Trace
 
 ## 收集 Dotnet 应用相关的性能日志
