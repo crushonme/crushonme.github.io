@@ -11,6 +11,16 @@ keywords: Kernel, Linux, Windbg, Debug
 timezone: Asia/Shanghai
 encoding: "utf-8"
 side_bar_repo_limit: 5
+repository: crushonme/crushonme.github.io
+# 组件配置
+components:
+    # 分享
+    share:
+        enabled: false
+    # 不蒜子访问统计
+    busuanzi:
+        enabled: true
+        start_date: 2020-05-14
 
 # ---------------- #
 #      Author      #
@@ -62,7 +72,7 @@ markdown: kramdown
 kramdown:
     input: GFM
 highlighter: rouge
-paginate: 8
+paginate: 10
 lsi: false
 quiet: false
 excerpt_separator: "\n\n"
@@ -81,8 +91,6 @@ collections:
     wiki:
         output: true
         permalink: /wiki/:path/
-
-repository: crushonme/crushonme.github.io
 
 # ---------------- #
 #      Comments    #
@@ -118,6 +126,11 @@ simple_jekyll_search:
 # ---------------- #
 google:
     analytics_id: UA-127425791-1
+    adsense:
+        footer: true
+        sidebar: true 
+        content_header: true
+        content_footer: false
 # ---------------- #
 #  Avoid github    #
 # authentication   #

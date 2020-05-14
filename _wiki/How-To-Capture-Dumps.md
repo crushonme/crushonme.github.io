@@ -281,7 +281,13 @@ Assume your application is TestLeak.exe
 
 - Repro the issue
 
-- Capture a memory dump of TestLeak.exe with full process memory: 
+- Capture a memory dump of TestLeak.exe with full process memory:
+
+  ```BAT
+  procdump -ma -m 1500 TestLeak.exe
+  ```
+
+  > If we want to capture more than one dump, we can start more than one instance and modify the value after -m to target commit memory threshold.
 
 - Disable UST for your application:
   - Using Gflags:
@@ -333,7 +339,7 @@ Assume your application is TestLeak.exe
 - 使用如下命令创建 DUMP：
 
   ```BAT
-  procdump -ma TestLeak.exe
+  procdump -ma -m 1500 TestLeak.exe
   ```
 
 - 禁用用户态调用栈跟踪数据库:
