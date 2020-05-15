@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How To Troubleshoot Handle Leak Issue
+title: Troubleshoot Handle Leak Issue with WPR
 categories: Debug
 description: 本文描述使用 Windows Performance Tool Kit 排查句柄泄露问题的方法，包括日志收集和日志分析。
 keywords: Handle Leak,WPR,WPA,Xperf
@@ -89,7 +89,8 @@ Usually We can use WPR to record the handle usage in system and WPA to annalyze 
 
 - Focus on the "Closing Process" is Unknown. Then check the "Owning Process" is your application.
 
-  >   - Think about it why "Closing Process " is Unknown means Handle Leak. "Closing Process" Unknown means that these handles are not free before we stoped collecting trace.
-  >   - "Creating Process" Unknown means that these handles are already there before we collecting trace.
+  >- Think about it why "Closing Process " is Unknown means Handle Leak. "Closing Process" Unknown means that these handles are not free before we stoped collecting trace.
+  >
+  >- "Creating Process" Unknown means that these handles are already there before we collecting trace.
 
-![WPA-Handle-Usage](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/WPA-HandleUsage.png)
+  ![WPA-Handle-Usage](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/WPA-HandleUsage.png)
