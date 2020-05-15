@@ -23,21 +23,21 @@ WNDPROC OriginalProc = NULL;
 
 LRESULT CALLBACK NewProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	int* p = nullptr;
-	*p = 1;
-	return OriginalProc(hwnd, uMsg, wParam, lParam);
+    int* p = nullptr;
+    *p = 1;
+    return OriginalProc(hwnd, uMsg, wParam, lParam);
 }
 int main()
 {
-	system("pause");
-	HWND hWnd = CreateWindowEx(0,TEXT("SampleOfUserCallbackException"),TEXT("0xC000041D"),
-		WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-		CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-		NULL, NULL, NULL, NULL);
-	OriginalProc = (WNDPROC)SetWindowLongPtr(hWnd, GWLP_WNDPROC, (LONG_PTR)NewProc);
+    system("pause");
+    HWND hWnd = CreateWindowEx(0,TEXT("SampleOfUserCallbackException"),TEXT("0xC000041D"),
+        WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+        NULL, NULL, NULL, NULL);
+    OriginalProc = (WNDPROC)SetWindowLongPtr(hWnd, GWLP_WNDPROC, (LONG_PTR)NewProc);
 
-	UpdateWindow(hWnd);
-	system("pause");
+    UpdateWindow(hWnd);
+    system("pause");
 }
 
 ```
@@ -46,7 +46,7 @@ int main()
 
 We can use [procdump](https://docs.microsoft.com/en-us/sysinternals/downloads/procdump) to capture the original first chance exception with below command:
 
-```
+```BAT
 procdump -e 1 -f "" processname
 ```
 
@@ -54,3 +54,4 @@ For example: In below picture, we can see the first chance exception is 0xC00000
 
 ![0xC000041DWithAV](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/0xC000041DWithAV.png)
 
+There is an actual issue in my previus blog. For mre details, you can read the content of [Application based on ATL6.0 crashed on Windows 10](https://crushonme.github.io/2018/07/16/Application-Crash-With-Exception-0xC0000005/)
