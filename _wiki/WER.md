@@ -77,7 +77,7 @@ keywords: WER,Windows Error Reporting
   |------------|---------------|----------|
   | DumpFolder | REG_EXPAND_SZ | C:\Dumps |
   | DumpCount  | REG_DWORD     | 5        |
-  | DumpType   | REG_DWORD     | 5        |
+  | DumpType   | REG_DWORD     | 2        |
 
   > DumpFolder 根据实际情况选择合适路径即可，在配置注册表前，请先创建该文件夹。
 
