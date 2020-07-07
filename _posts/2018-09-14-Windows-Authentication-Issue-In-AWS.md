@@ -12,8 +12,8 @@ keywords: Windows Authentication,NTLM,Kerberos
 
 # 必备知识点
 
-1. 在 IIS （6.0版本以上） 中默认情况下 NTLM 是 Session Based Authentication， 而 Kerberos 则是 Request Based Authentication。即对于 NTLM Authentication ，同一个 TCP 会话中的请求仅做一次 NTLM Authentication， IIS 会在 Server 端缓存 Token 或者 Ticket；对于 Kerberos Authentication ， 则每个请求均需要认证；参考 [Are you seeing 401’s too often for HTTP web requests?](https://blogs.msdn.microsoft.com/saurabh_singh/2010/01/06/are-you-seeing-401s-too-often-for-http-web-requests/)
-2. IIS 中 Windows Authentication 的行为可以通过 authPersistNonNTLM 和 authPersistSingleRequest 来改变，即 如果希望将 NTLM 改为 Request Based Authentication ， 则需要将 authPersistSingleRequest 改为 true ； 如果希望将 Kerberos Authentication 改为 Session Based Authentication ， 则需要将 authPersistNonNTLM 改为 true ；参考 [Windows Authentication ](https://docs.microsoft.com/en-us/iis/configuration/system.webserver/security/authentication/windowsauthentication/)
+1. 在 IIS （6.0版本以上） 中默认情况下 NTLM 是 Connection Based Authentication， 而 Kerberos 则是 Request Based Authentication。即对于 NTLM Authentication ，同一个 TCP 会话中的请求仅做一次 NTLM Authentication， IIS 会在 Server 端缓存 Token 或者 Ticket；对于 Kerberos Authentication ， 则每个请求均需要认证；参考 [Are you seeing 401’s too often for HTTP web requests?](https://blogs.msdn.microsoft.com/saurabh_singh/2010/01/06/are-you-seeing-401s-too-often-for-http-web-requests/)
+2. IIS 中 Windows Authentication 的行为可以通过 authPersistNonNTLM 和 authPersistSingleRequest 来改变，即 如果希望将 NTLM 改为 Request Based Authentication ， 则需要将 authPersistSingleRequest 改为 true ； 如果希望将 Kerberos Authentication 改为 Connection Based Authentication ， 则需要将 authPersistNonNTLM 改为 true ；参考 [Windows Authentication ](https://docs.microsoft.com/en-us/iis/configuration/system.webserver/security/authentication/windowsauthentication/)
 3. 在使用 NLB 的场景下， 部分 NLB  为了提升性能，会重用 TCP 会话；
 
 
@@ -29,4 +29,3 @@ keywords: Windows Authentication,NTLM,Kerberos
 
 - 调整 IIS 设置，即修改 authPersistNonNTLM  或者 authPersistSingleRequest 设置；
 - 在前端的 NLB 测，关闭 TCP 重用功能；
-
