@@ -34,7 +34,7 @@ keywords: netmon,Network Monitor
 
   ```CMD
   mkdir C:\temp
-  nmcap /netrwork * /capture /file C:\temp\netmon.chn:200MB
+  nmcap /network * /capture /file C:\temp\netmon.chn:200MB
   ```
 
 - 重现问题并记录时间点， URL，IP 地址等信息；
@@ -57,7 +57,7 @@ keywords: netmon,Network Monitor
   If we want to limit the file size of each capture file generated, use below command instead:
 
   ```CMD
-  nmcap /netrwork * /capture /file C:\temp\netmon.chn:200MB
+  nmcap /network * /capture /file C:\temp\netmon.chn:200MB
   ```
 
 - Repro issue
