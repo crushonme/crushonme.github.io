@@ -10,7 +10,7 @@ keywords: netmon,Network Monitor
 
 ## Network Monitor 抓取网络包步骤
 
-- 根据当前 CPU 架构下载并安装 [Network Monitor](http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=4865 )；
+- 根据当前 CPU 架构下载并安装 [Network Monitor](https://www.microsoft.com/en-us/download/4865)；
 
 - 尽量关闭所有与问题无关的软件并以管理员权限运行 Network Monitor；
 
@@ -26,7 +26,7 @@ keywords: netmon,Network Monitor
 
 ## Netowrk Monitor 分包抓取网络包步骤
 
-- 根据当前 CPU 架构下载并安装 [Network Monitor](http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=4865 )；
+- 根据当前 CPU 架构下载并安装 [Network Monitor](https://www.microsoft.com/en-us/download/4865)；
 
 - 尽量关闭所有与问题无关的软件并以管理员权限运行 Network Monitor；
 
@@ -43,7 +43,7 @@ keywords: netmon,Network Monitor
 
 ## How to Capture Network Package with Network Monitor
 
-- Download and install network monitor from [Network Monitor](http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=4865 )；
+- Download and install network monitor from [Network Monitor](https://www.microsoft.com/en-us/download/4865)；
 
 - Restart machine
 
