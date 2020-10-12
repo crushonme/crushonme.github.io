@@ -10,6 +10,7 @@ keywords: Procmon,Debug
 ![audio-windows-10-stack-diagram](/images/posts/audio-windows-10-stack-diagram.png)
 
 通常而言对于使用 Core Audio API 的应用出现问题较多的场景为部分 API 在使用过程中出现被阻塞的现象，一般而言这种问题有以下几种排查思路：
+
 1. 可以在应用中添加日志即可确认具体的 API 接口问题;
 2. 如果实际生产环境中才能复现的问题，则我们需要使用 Windows 中的 ETL trace 方式，但该方式的明显缺点是普通使用者无法解析 ETL，因为普通使用者没有对应的 Symbol。通常这种情况下需要有 Microsoft 的技术支持介入协助排查;
 3. 以上两种方案一般仅仅能定位到具体出问题的 API，但很难知道底层为什么被阻塞，此时我们通常需要抓取 Complete DUMP来看（User Space DUMP 仅能看到当前进程的问题，而音频问题通常是 Audio Service 或者底层 driver 甚至是底层硬件导致）； 

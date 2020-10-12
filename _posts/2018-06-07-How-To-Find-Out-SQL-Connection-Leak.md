@@ -33,3 +33,26 @@ keywords: Windbg，SQL，Connection Leak
 - 关闭连接部分代码为放在 finally 代码块中；此时如果执行过程中出现异常，则无法正常关闭连接；
 - 在 ExecuteReader 中指定行为常量为 [CommandBehavior.CloseConnection](https://msdn.microsoft.com/en-us/library/system.data.commandbehavior(v=vs.110).aspx)，但最终未关闭 DataReader 对象；
 - 在类中定义的静态数据库连接变量用于连接复用，此时需要注意在合适的时候关闭连接，否则该连接很可能一直无法释放；
+
+> **Notes:**
+>
+> 我们也可以使用 netext 插件，获取所有数据库连接状态：
+>
+> ```windbg
+> !netext.windex;
+>
+> #Oracle Connection:
+> !wfrom -type Oracle.DataAccess.Client.OracleConnection select $a("Address: ",$addr()),$a("State:",$fieldaddress(m_state))
+>
+> MSSQL Connection:
+> !wfrom -type System.Data.SqlClient. SqlConnection  select $a("Address: ",$addr()),$a("State:",$fieldaddress(m_state))
+>
+> #以下方法可以列出所有未关闭的连接：
+> !netext.windex;
+>
+> #Oracle Connection:
+> !wfrom -type Oracle.DataAccess.Client.OracleConnection where(m_state) select $a("Address: ",$addr()),$a("State:",$fieldaddress(m_state))
+>
+> #MSSQL Connection:
+> !wfrom -type System.Data.SqlClient. SqlConnection  where(m_state)  select $a("Address: ",$addr()),$a("State:",$fieldaddress(m_state))
+> ```

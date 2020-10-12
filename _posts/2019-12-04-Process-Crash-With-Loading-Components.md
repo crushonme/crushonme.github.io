@@ -24,7 +24,7 @@ keywords: Code Integrity, UMCI, Device Guard, 0x060c201e
 
 看到这个报错后，我们通过 [WER](https://docs.microsoft.com/en-us/windows/win32/wer/collecting-user-mode-dumps) 收集了崩溃时的 DUMP ，检查 DUMP 看到如下调用栈， 可以看到帧 0 的方法是在处理完整性相关的错误。可以通过检查参数信息找到当前需要加载的模块信息，但此时依然无法知道完整性错误的具体原因。
 
-```
+``` windbg
 00 ntdll!LdrAppxHandleIntegrityFailure
 01 KERNELBASE!CreateFileMappingNumaW
 02 KERNELBASE!CreateFileMappingW
@@ -40,11 +40,9 @@ keywords: Code Integrity, UMCI, Device Guard, 0x060c201e
 ……
 ```
 
-
-
 为了进一步得到更多信息，我们抓取了 Process Monitor 日志，并检查了加载对应模块上下文的调用栈：可以从调用栈明显的看到在 CI 模块调用 CiValidateImageHeader 时抛了错 CipReportAndReprieveUMCIFailure。
 
-<img src="https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/LdrAppxHandleIntegrityFailure.png" alt="LdrAppxHandleIntegrityFailure" style="zoom:100%;" />
+![LdrAppxHandleIntegrityFailure](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/LdrAppxHandleIntegrityFailure.png)
 
 > 关于如何在 Process Monitor 中加载调用栈可以参考前面的文章 [如何查看调用栈]([https://crushonme.github.io/2018/09/10/How-To-Use-Process-Monitor/#%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%B0%83%E7%94%A8%E6%A0%88](https://crushonme.github.io/2018/09/10/How-To-Use-Process-Monitor/#如何查看调用栈))
 

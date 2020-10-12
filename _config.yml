@@ -5,7 +5,7 @@ baseurl:
 url: https://crushonme.github.io
 date_format: "ordinal"
 title: 路遥之家
-subtitle: "路遥知马力，日久见人心"
+subtitle: "路遥知马力"
 description: "Robin 的个人博客"
 keywords: Kernel, Linux, Windbg, Debug
 timezone: Asia/Shanghai
