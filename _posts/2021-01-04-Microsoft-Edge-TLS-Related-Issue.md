@@ -14,7 +14,7 @@ Recently we got several TLS related issues on Microsoft Edge. Those issues also 
 
 ## ERR_SPDY_INADEQUATE_TRANSPORT_SECURITY
 
-For the error of ERR_SPDY_INADEQUATE_TRANSPORT_SECURITY, we can check the error in edge://net-exports and we will find out that the real error code is ERR_HTTP2_INADEQUATE_TRANSPORT_SECURITY. See the net_error in below logs:
+For the error of ERR_SPDY_INADEQUATE_TRANSPORT_SECURITY, we can check the error in edge://net-export and we will find out that the real error code is ERR_HTTP2_INADEQUATE_TRANSPORT_SECURITY. See the net_error in below logs:
 
 ```log
 t=47212 [st= 1]      NETWORK_DELEGATE_BEFORE_START_TRANSACTION  [dt=0]
@@ -76,7 +76,7 @@ If the SSL protocol is less than TLS 1.2 or the Cipher suite is in the list of [
 
 ## ERR_CERT_WAK_SIGNATURE_ALGORITHM
 
-For this error, we can reproduce the issue with [Bad SSL SHA1-2016](https://sha1-2016.badssl.com/). We can also check the log in edge://net-exports. Below is the snapshot:
+For this error, we can reproduce the issue with [Bad SSL SHA1-2016](https://sha1-2016.badssl.com/). We can also check the log in edge://net-export. Below is the snapshot:
 
 ```log
 89279: URL_REQUEST
