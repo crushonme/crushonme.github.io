@@ -6,12 +6,14 @@ description:
 keywords: Edge,Chrome,RendererCodeIntegrity,disable-features
 ---
 
-If you have IP-Guard software installed and set Microsoft Edge as default browser, you might are suffuring the issue of that Edge add “%20--disable-features=RendererCodeIntegrity” as suffix in the URL when you double click the local pdf file or try to access hyperlink in outlook. Just like the issue mentioned in [How can I disable "%20--disable-features=RendererCodeIntegrity" from being automatically appended to the URL in Microsoft Edge(chromium)?](https://superuser.com/questions/1614855/how-can-i-disable-20-disable-features-renderercodeintegrity-from-being-autom)
+If you have [IP-Guard software](http://www.ip-guard.net) installed and set Microsoft Edge as default browser, you might are suffuring the issue of that Edge add “%20--disable-features=RendererCodeIntegrity” as suffix in the URL when you double click the local pdf file or try to access hyperlink in outlook. Just like the issue mentioned in [How can I disable "%20--disable-features=RendererCodeIntegrity" from being automatically appended to the URL in Microsoft Edge(chromium)?](https://superuser.com/questions/1614855/how-can-i-disable-20-disable-features-renderercodeintegrity-from-being-autom)
 
 # Solution
+
 This is because C:\WINDOWS\SYSTEM32\DtFrame64.dll,one of component in IP-Guard software, hooked explorer.exe.
 
 # Analysis
+
 We will see below trace in Process Monitor logs:
 
 | Date & Time           | Process Name | PID   | Detail                                                                                                                                                                                      | TID  | Operation      | Path                                                         | Result  |
