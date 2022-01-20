@@ -44,9 +44,7 @@ keywords: IE11, Web Browser
 
 ## Collect IE settings
 
-- Download IEDigest from [here](https://www.microsoft.com/en-us/download/details.aspx?id=51694)
-
-  > Download iedigest_NET2_196.exe for Windows 7 and iedigest_NET4_196.exe for Windows 8 and above.
+- Download IEDigest from [here](https://aka.ms/iedigest)
 
 - Run IEDigest and Click "Create report"; And then you will get a report on your desktop named with IEDigest;
 
@@ -54,8 +52,7 @@ keywords: IE11, Web Browser
 
 ## 收集 IE 设置
 
-- 下载 [IEDigest](https://www.microsoft.com/en-us/download/details.aspx?id=51694)
-  > 如果是 Windows 7 系统则下载 iedigest_NET2_196.exe for Windows 7； 如果是 Windows 8.1 以上版本的系统则下载iedigest_NET4_196.exe。
+- 下载 [IEDigest](https://aka.ms/iedigest)
 
 - 运行 IEDigest 并点击 "Create report"，会在您桌面上生成名为 IEDigest 的文件夹。
   ![IEDigest](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/IEDigest.png)
