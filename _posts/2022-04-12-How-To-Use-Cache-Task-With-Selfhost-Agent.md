@@ -18,27 +18,57 @@ It's very easy to use Azure DevOps Cache Task with Microsoft Hosted agent. For s
 
 From above table, it tells us that we must install GNU Tar on Windows and 7-Zip is recommended. Then we will install GNU Tar and 7-Zip in selfhost agent and add the path to PATH environment variable. 
 
-Cache task will use 7-zip (***only if 7z is installed and is part of PATH variable***) to extract the TAR file on Windows. It will try to launch 7z.exe to check 7z exists. If failed, it will fall back to GNU Tar.
+In Cache task will use 7-zip (***only if 7z is installed and is part of PATH variable***) to extract the TAR file on Windows. It will try to launch 7z.exe to check 7z exists. If failed, it will fall back to GNU Tar.
 
 ```csharp
-if (isWindows && CheckIf7ZExists())
+private static ProcessStartInfo GetExtractStartProcessInf(AgentTaskPluginExecutionContext context, stringtargetDirectory)
 {
-    processFileName = "7z";
-    processArguments = $"x -si -aoa -o\"{targetDirectory}\" -ttar";
-    if (context.IsSystemDebugTrue())
+    string processFileName, processArguments;
+    if (isWindows && CheckIf7ZExists())
     {
-        processArguments = "-bb1 " + processArguments;
+        processFileName = "7z";
+        processArguments = $"x -si -aoa -o\"{targetDirectory}\" -ttar";
+        if (context.IsSystemDebugTrue())
+        {
+            processArguments = "-bb1 " + processArguments;
+        }
     }
+    else
+    {
+        processFileName = GetTar(context);
+        processArguments = $"-xf - -C ."; // Instead of targetDirectory, we are providing . to tar, because the tar process is being started from targetDirectory.
+        if (context.IsSystemDebugTrue())
+        {
+            processArguments = "-v " + processArguments;
+        }
+    }
+    ProcessStartInfo processStartInfo = new ProcessStartInfo();
+    CreateProcessStartInfo(processStartInfo, processFileName, processArguments, processWorkingDirectory: targetDirectory);
+    return processStartInfo;
 }
-else
+```
+
+In Post Cache Task, it will use Tar.exe to create Tar archive.
+
+```csharp
+private static ProcessStartInfo GetCreateTarProcessInf(AgentTaskPluginExecutionContext context, stringarchiveFileName, string inputPath)
 {
-    processFileName = GetTar(context);
-    processArguments = $"-xf - -C ."; // Instead of targetDirectory, we are providing . to tar, because the tar process is being started from targetDirectory.
+    var processFileName = GetTar(context);
+    inputPath = inputPath.TrimEnd(Path.DirectorySeparatorChar).TrimEnd(Path.AltDirectorySeparatorChar);
+    var processArguments = $"-cf \"{archiveFileName}\" -C \"{inputPath}\" ."; // If given the absolute path for the '-cf' option, the GNU tar fails. The workaround is to start the tarring process in the temp directory, and simply speficy 'archive.tar' for that option.
     if (context.IsSystemDebugTrue())
     {
         processArguments = "-v " + processArguments;
     }
-}
+    if (isWindows)
+    {
+        processArguments = "-h " + processArguments;
+    }
+    
+    ProcessStartInfo processStartInfo = new ProcessStartInfo();
+    CreateProcessStartInfo(processStartInfo, processFileName, processArguments, processWorkingDirectory: Path.GetTempPath()); // We want to create the archiveFile in temp folder, and hence starting the tar process from TEMP to avoid absolute paths in tar cmd line.
+    return processStartInfo;
+        }
 ```
 
 # How to Setup Selfhost Agent for Cache Task
