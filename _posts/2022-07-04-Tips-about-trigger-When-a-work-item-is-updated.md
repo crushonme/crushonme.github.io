@@ -56,3 +56,99 @@ Below is the sample:
 
     ![](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/GetLatestWorkItemUpdate.png)
 1. Now we can add a condition to check the result in last changes.
+
+### Actual Scenario - State change from New to Active
+
+Below is the sample. We can see the value of System.State changes from New to Active in the changes history. We can use this change as condition to check "State change from New to Active"
+
+```json
+{
+      "id": 6,
+      "workItemId": 1,
+      "rev": 3,
+      "revisedBy": {
+        "id": "764a73bf-ac8b-41d9-8dee-d4f5f0edf711",
+        "name": "Jamal Hartnett <fabrikamfiber4@hotmail.com>",
+        "displayName": "Jamal Hartnett",
+        "uniqueName": "fabrikamfiber4@hotmail.com",
+        "url": "https://vssps.dev.azure.com/fabrikam/_apis/Identities/764a73bf-ac8b-41d9-8dee-d4f5f0edf711",
+        "imageUrl": "https://dev.azure.com/fabrikam/_api/_common/identityImage?id=764a73bf-ac8b-41d9-8dee-d4f5f0edf711"
+      },
+      "revisedDate": "2017-09-04T02:36:25.3Z",
+      "fields": {
+        "System.Rev": {
+          "oldValue": 2,
+          "newValue": 3
+        },
+        "System.AuthorizedDate": {
+          "oldValue": "2017-09-04T02:28:56.253Z",
+          "newValue": "2017-09-04T02:36:18.75Z"
+        },
+        "System.RevisedDate": {
+          "oldValue": "2017-09-04T02:36:18.75Z",
+          "newValue": "2017-09-04T02:36:25.3Z"
+        },
+        "System.IterationId": {
+          "oldValue": 3,
+          "newValue": 4
+        },
+        "System.IterationLevel2": {
+          "oldValue": "Iteration 1",
+          "newValue": "Iteration 2"
+        },
+        "System.State": {
+          "oldValue": "New",
+          "newValue": "Active"
+        },
+        "System.Reason": {
+          "oldValue": "New",
+          "newValue": "Approved"
+        },
+        "System.ChangedDate": {
+          "oldValue": "2017-09-04T02:28:56.253Z",
+          "newValue": "2017-09-04T02:36:18.75Z"
+        },
+        "System.Watermark": {
+          "oldValue": 8,
+          "newValue": 11
+        },
+        "System.IterationPath": {
+          "oldValue": "MyAgilePro1\\Iteration 1",
+          "newValue": "MyAgilePro1\\Iteration 2"
+        },
+        "Microsoft.VSTS.Common.StateChangeDate": {
+          "oldValue": "2017-09-04T02:08:16.6Z",
+          "newValue": "2017-09-04T02:36:18.75Z"
+        },
+        "Microsoft.VSTS.Common.ActivatedDate": {
+          "newValue": "2017-09-04T02:36:18.75Z"
+        },
+        "Microsoft.VSTS.Common.ActivatedBy": {
+          "newValue": {
+            "displayName": "Jamal Hartnett",
+            "url": "https://vssps.dev.azure.com/fabrikam/_apis/Identities/d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+            "_links": {
+              "avatar": {
+                "href": "https://dev.azure.com/mseng/_apis/GraphProfile/MemberAvatars/aad.YTkzODFkODYtNTYxYS03ZDdiLWJjM2QtZDUzMjllMjM5OTAz"
+              }
+            },
+            "id": "d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+            "uniqueName": "fabrikamfiber4@hotmail.com",
+            "imageUrl": "https://dev.azure.com/fabrikam/_api/_common/identityImage?id=d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+            "descriptor": "aad.YTkzODFkODYtNTYxYS03ZDdiLWJjM2QtZDUzMjllMjM5OTAz"
+          }
+        },
+        "Microsoft.VSTS.TCM.SystemInfo": {
+          "newValue": "step 2"
+        },
+        "Microsoft.VSTS.TCM.ReproSteps": {
+          "newValue": "step 1"
+        },
+        "System.Tags": {
+          "oldValue": "",
+          "newValue": "beauty"
+        }
+      },
+      "url": "https://dev.azure.com/fabrikam/6ce954b1-ce1f-45d1-b94d-e6bf2464ba2c/_apis/wit/workItems/1/updates/6"
+    }
+```
