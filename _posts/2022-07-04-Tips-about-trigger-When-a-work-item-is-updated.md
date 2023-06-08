@@ -41,12 +41,15 @@ Then we can use the "Condition Actions" to detect the changes.
 
 Below is the sample:
 1. Create a "Send an HTTP request to Azure DevOps" action and use the REST API in [List work item updates](https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/updates/list?view=azure-devops-rest-5.1) and replace the {id} with ID from "When a work item is updated" trigger
+
 ![](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/ListAllWorkItemUpdates.png)
 
 1. Create a "Parse Json" action and use the Body from last steps. Generate Json Schema use the sample from [List of work item updates Sample Response](https://docs.microsoft.com/en-us/rest/api/azure/devops/wit/updates/list?view=azure-devops-rest-5.1#list-of-work-item-updates)
+
 ![](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/ParseAllWorkItemUpdatesToGetTheCount.png)
 
 1. Create a "Initialize a variable" action and use the "count" from last steps
+
 ![](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/InitializeLastUpdateNumberFromJsonResult.png)
 
 1. Create another "Send an HTTP request to Azure DevOps" action 
@@ -55,6 +58,7 @@ Below is the sample:
     - replace the {updateNumber} with LastUpdateNumber from step 3.
 
     ![](https://crushonme-1256821258.cos.ap-shanghai.myqcloud.com/GetLatestWorkItemUpdate.png)
+
 1. Now we can add a condition to check the result in last changes.
 
 ### Actual Scenario - State change from New to Active
