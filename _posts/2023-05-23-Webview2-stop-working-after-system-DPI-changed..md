@@ -14,16 +14,17 @@ We can easily reproduce the issue with Webview2 sample.
 1. Download and compile the sample in [WebView2WpfBrowser](https://github.com/MicrosoftEdge/WebView2Samples/tree/main/SampleApps/WebView2WpfBrowser)
 1. Run the WebView2WpfBrowser.exe and change the resolution or Scale in Settings-->System--> Display --> Scale&Layout.
 1. Click "Window --> New WebView" in the menu of WebView2WpfBrowser.exe
-1. Then we will see WebView2WpfBrowser.exe only show the background of EdgeWebView2-80.jpg instead of HTML content.
+1. Instead of displaying HTML content, WebView2WpfBrowser.exe only shows the background of EdgeWebView2-80.jpg.
 
 
 # Troubleshooting
 
-Reproduce the issue in local environment.
-1. We see that the process and windows changed during the issue. And every time I see the behavior is then I came home and work with a single 1. display RDP session.
-1. Customer feedback that they noticed the window resize event every time when they reproduced the issue.
+Try to reproduce the issue.
+
+1. Notice that the process and windows change during the issue. The behavior is observed when working with a single display RDP session after coming home.
+1. Noticed the window resize event every time when we reproduced the issue.
 1. We can always reproduce the issue when we reconnect RDP session from multiple displays to single displays.
-1. Suggest adding DPI Awareness code following [Setting the default DPI awareness for a process (Windows)](https://learn.microsoft.com/en-us/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process#setting-default-awareness-with-the-application-manifest). And we see the issue is gone.
+1. After adding DPI Awareness code following [Setting the default DPI awareness for a process (Windows)](https://learn.microsoft.com/en-us/windows/win32/hidpi/setting-the-default-dpi-awareness-for-a-process#setting-default-awareness-with-the-application-manifest), the issue is gone.
 
 # Cause
 
@@ -56,9 +57,3 @@ This will create a new registry String Value under below registry path which con
 ```
 HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers
 ``` 
-
-Optimize option:
-Add a check in WebView2 that if the dpi is different, notify the user/dev to go and restart the app to fix it.
-
-
-
