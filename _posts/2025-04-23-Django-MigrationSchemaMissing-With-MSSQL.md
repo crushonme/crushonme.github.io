@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Django MigrationSchemaMissing Error With MSSQL
-categories: sqldb
+categories: SQLDB
 description: guide to resolving the MigrationSchemaMissing error when using Django’s mssql-django backend with MSSQL(including Azure SQL Database).
 keywords: sqldb, AzureSQL, django
 ---

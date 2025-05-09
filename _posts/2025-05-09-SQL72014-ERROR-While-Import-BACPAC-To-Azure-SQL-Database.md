@@ -2,7 +2,7 @@
 layout: post
 title: Error SQL72014 When Import BACPAC to Azure SQL Database
 categories: SQLDB
-description: sqlpackage return error "Error SQL72014: .Net SqlClient Data Provider: Msg 15419, Level 16, State 1, Line 1 Supplied parameter sid should be binary(16)."
+description: sqlpackage return error "Error SQL72014:.Net SqlClient Data Provider:Msg 15419, Level 16, State 1, Line 1 Supplied parameter sid should be binary(16)."
 keywords: Azure SQL Database,sqldb,sqlpackage
 ---
 

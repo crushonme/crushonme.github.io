@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 为 GitHub Pages 添加 PWA 功能
-categories: IoT
+categories: Browsers
 description: 本文介绍如何使用为 GitHub Pages 添加 PWA 功能。
 keywords: GitHub Pages,PWA,Progressive Web Apps
 ---

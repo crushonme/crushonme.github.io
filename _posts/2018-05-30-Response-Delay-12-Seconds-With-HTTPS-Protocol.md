@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 使用 HTTPS 协议时实时通话系统响应延迟
-categories: WEB
+categories: Windows
 description: 基于 .NET Framework 4.5 开发的 CS 架构系统，在使用过程中偶发出现 HTTPS 请求延迟 12 秒左右才到达服务器端
 keywords: HTTPS, Proxy
 ---
