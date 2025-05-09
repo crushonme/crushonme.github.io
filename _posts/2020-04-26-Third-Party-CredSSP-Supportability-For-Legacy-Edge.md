@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Third Party CredSSP Supportability For Legacy Edge
-categories: Browser
+categories: Browsers
 description: 浏览器相关调试和排障技巧汇总
 keywords: Legacy Edge, CredSSP
 ---

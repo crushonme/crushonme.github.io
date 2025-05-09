@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Why It Show Unknown Zone Even though Adding Websites To Trust Site
-categories: Browser
+categories: Browsers
 description: This article talk about one possible reason about Unknown Zone(mixed).
 keywords: IE11, Security Zone, Unknown Zone(mixed)
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: How To Open FTP Protocol In Explore By Default
-categories: Browser
+categories: Browsers
 description: On Windows, IE is default protocol handler for FTP. So how to Open FTP protocol in Explore? This document is for your reference.
 keywords: knownfolder
 ---

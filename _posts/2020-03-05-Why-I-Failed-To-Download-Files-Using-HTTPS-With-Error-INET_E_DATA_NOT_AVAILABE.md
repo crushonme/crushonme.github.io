@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Why I faied to download files from website with error INET_E_DATA_NOT_AVAILABLE
-categories: Browser
+categories: Browsers
 description: 
 keywords: INET_E_DATA_NOT_AVAILABLE,0x800C0007
 ---
