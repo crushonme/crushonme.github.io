@@ -36,13 +36,18 @@ It's a race condition issue. Azure SQL does not handle firewall rules well, whic
 
 ## Reproduce Steps
 1. Create 129 subnets and enable Microsoft.Sql endpoint for it in one Azure Virtual Network.
-2. Adding Vnet firewall rules for these subnets.
+2. Adding Vnet firewall rules for these subnets with PowerShell command.And you will see the timeout error.
+    ```powershell
+    New-AzResourceGroupDeployment -Name $DeployName -ResourceGroupName $RG -TemplateFile $Path
+    ```
 3. Get SQL Vnet rules and find out the one with status InProgress with below PowerShell.
     ```powershell
     Get-AzSqlServerVirtualNetworkRule -ResourceGroupName $RGName -ServerName $SqlServerName | Where-Object { $_.State -ne "Ready" }
     ```
-4. Create a Vnet rule for that subnet again and then we will get below error.
-
+4. Create a Vnet rule for that subnet again and then we will get the error.
+    ```powershell
+    New-AzResourceGroupDeployment -Name $DeployName -ResourceGroupName $RG -TemplateFile $Path
+    ```
 
 ## Resources
 
