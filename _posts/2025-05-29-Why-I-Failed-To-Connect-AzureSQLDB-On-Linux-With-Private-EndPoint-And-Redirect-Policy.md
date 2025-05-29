@@ -1,12 +1,10 @@
 ---
 layout: post
-title: Set SQL Vulnerability assessment failure in Activity log of Azure SQL Server.
+title: DAB deployed in AKS failed to connect Azure SQL Database with redirection connection policy when private endpoint enabled.
 categories: SQLDB
 description: In recent deployments, users have encountered a significant issue with Data API Builder (DAB) failing to connect to Azure SQL Database when hosted in Azure Kubernetes Service (AKS) with redirect connection policy and private endpoint enabled. This blog post will delve into the phenomenon, its root causes, and the proposed solutions.
 keywords: sqldb, AzureSQL,SqlClient,SNI,Redirect,Private Endpoint,Linux
 ---
-
-# Introduction
 
 In recent deployments, users have encountered a significant issue with Data API Builder (DAB) failing to connect to Azure SQL Database when hosted in Azure Kubernetes Service (AKS) with redirect connection policy and private endpoint enabled. This blog post will delve into the phenomenon, its root causes, and the proposed solutions.
 
