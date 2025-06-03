@@ -6,6 +6,68 @@ description: This blog introduced concepts of Auditing and Diagnostic log in Azu
 keywords: sqldb, AzureSQL,auditing,diagnostic
 ---
 
+Auditing for Azure SQL Database tracks database events and writes them to an audit log in your Azure storage account, Log Analytics workspace, or Event Hubs. And Diagnostic log for Azure SQL Database can help us to identify performance related issue.
+
+This blog serves as a FAQ for Auditing and Diagnostic logs related to Azure SQL Database.
+
+## How to query Auditing Log and Diagnostic log strored in Log Analytics Workspace?
+
+Audit events are written to Log Analytics workspace defined during auditing configuration, to the AzureDiagnostics table with the category SQLSecurityAuditEvents, and table with the category DevOpsOperationsAudit for Microsoft Support Operations.
+
+[Audit log fields](https://learn.microsoft.com/en-us/azure/azure-sql/database/audit-log-format?view=azuresql#subheading-1) provided the schema of auditing log in Log Analytics.
+
+<details><summary>Expand to check sample queries in LAW</summary>
+
+>NOTES
+>
+> Replace the ResourceId and database_name_s with your acutal resource and database.
+
+- Check SQL exeuction event
+
+```
+AzureDiagnostics
+| where Category == 'SQLSecurityAuditEvents'
+| where ResourceId == '/SUBSCRIPTIONS/799C164D-xxxx-42DA-8658-489CBFE60EDE/RESOURCEGROUPS/SQL/PROVIDERS/MICROSOFT.SQL/SERVERS/SQLSERVERSEA-xxxx/DATABASES/MASTER' and database_name_s == 'xxxxx'
+| where action_id_s in('RCM ','BCM ')
+| project event_time_t,statement_s,succeeded_s,affected_rows_d,server_principal_name_s,client_ip_s,application_name_s,additional_information_s,data_sensitivity_information_s
+| order by event_time_t desc
+```
+
+- Check Database AUthetnication Events
+
+```
+AzureDiagnostics
+| where Category == 'SQLSecurityAuditEvents'
+| where ResourceId == '/SUBSCRIPTIONS/799C164D-xxxx-42DA-8658-489CBFE60EDE/RESOURCEGROUPS/SQL/PROVIDERS/MICROSOFT.SQL/SERVERS/SQLSERVERSEA-xxxx/DATABASES/MASTER' and database_name_s == 'xxxxx'
+| where action_id_s in('DBAS','DBAF')
+| project event_time_t,action_id_s,succeeded_s,server_principal_name_s,client_ip_s,application_name_s,client_tls_version_d,database_name_s,host_name_s
+| order by event_time_t desc
+```
+
+- Check Database AUthetnication Events Trends
+
+```
+AzureDiagnostics
+| where Category == 'SQLSecurityAuditEvents'
+| where ResourceId == '/SUBSCRIPTIONS/799C164D-xxxx-42DA-8658-489CBFE60EDE/RESOURCEGROUPS/SQL/PROVIDERS/MICROSOFT.SQL/SERVERS/SQLSERVERSEA-xxxx/DATABASES/MASTER' and database_name_s == 'xxxxx'
+| where action_id_s in('DBAS','DBAF')
+| summarize count() by action_name_s,bin(originalEventTimestamp_t,15m)
+| render timechart 
+```
+
+- Check Database AUthetnication Failure Events
+
+```
+AzureDiagnostics
+| where Category == 'SQLSecurityAuditEvents'
+| where ResourceId == '/SUBSCRIPTIONS/799C164D-xxxx-42DA-8658-489CBFE60EDE/RESOURCEGROUPS/SQL/PROVIDERS/MICROSOFT.SQL/SERVERS/SQLSERVERSEA-xxxx/DATABASES/MASTER' and database_name_s == 'xxxxx'
+| where action_id_s in('DBAF')
+| project-reorder event_time_t,action_id_s,succeeded_s,server_principal_name_s,client_ip_s,application_name_s,client_tls_version_name_s,database_name_s,host_name_s,additional_information_s
+| order by event_time_t desc
+```
+
+</details>
+
 ## What's the difference between Auditing and Diagnostic logs for Azure SQL Database
 
 - Purpuse:Just like the difference in the name, Auditing log is used for auditing and Diagnostic log is used for diagnostic.
