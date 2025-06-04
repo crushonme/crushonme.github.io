@@ -70,6 +70,9 @@ subscribe_rss: /feed.xml
 # ---------------- #
 # Use CommonMarkGhPages as Markdown converter to support collapsible sections
 markdown: CommonMarkGhPages
+commonmark:
+  options: ["UNSAFE", "SMART", "FOOTNOTES"]
+  extensions: ["strikethrough", "autolink", "table", "tagfilter"]
 #markdown: kramdown
 #kramdown:
 #    input: GFM
@@ -81,6 +84,8 @@ excerpt_separator: "\n\n"
 permalink: /:year/:month/:day/:title/
 plugins:
     - jekyll-github-metadata
+    - jekyll-commonmark-ghpages
+    - jekyll-seo-tag
     - rouge
 #     - jekyll-html-pipeline
     - jekyll-paginate

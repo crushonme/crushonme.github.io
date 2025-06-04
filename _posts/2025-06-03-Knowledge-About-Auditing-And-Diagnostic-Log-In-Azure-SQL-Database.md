@@ -16,7 +16,7 @@ Audit events are written to Log Analytics workspace defined during auditing conf
 
 [Audit log fields](https://learn.microsoft.com/en-us/azure/azure-sql/database/audit-log-format?view=azuresql#subheading-1) provided the schema of auditing log in Log Analytics.
 
-<details><summary>Expand to check sample queries in LAW</summary>
+<details><summary><strong>Expand to check sample queries in LAW</strong></summary>
 
 >NOTES
 >
@@ -103,7 +103,7 @@ AzureDiagnostics
 
 [Auditing policy at the server and database level](https://learn.microsoft.com/en-us/azure/azure-sql/database/auditing-server-level-database-level?view=azuresql)
 
-<details><summary>Expand to get the official content</summary>
+<details><summary><strong>Expand to get the official content</strong></summary>
 
 - A server policy applies to all existing and newly created databases on the server.
 
@@ -155,7 +155,7 @@ The path pattern should be  \<Storage_endpoint\>\<Container\>\<ServerName\>/\<Da
 >
 > file_pattern parameter is used to specify a blob URL (including the storage endpoint and container). While it ***doesn't support an asterisk wildcard***, you can ***use a partial file (blob) name prefix (instead of the full blob name)*** to collect multiple files (blobs) that begin with this prefix.
 
-<details><summary>Expand to check the examples</summary>
+<details><summary><strong>Expand to check the examples</strong></summary>
 
 ### Check all audit files (blobs) for the specific database.
 
