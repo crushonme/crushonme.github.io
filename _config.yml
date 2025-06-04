@@ -68,9 +68,11 @@ subscribe_rss: /feed.xml
 # ---------------- #
 #      Jekyll      #
 # ---------------- #
-markdown: kramdown
-kramdown:
-    input: GFM
+# Use CommonMarkGhPages as Markdown converter to support collapsible sections
+markdown: CommonMarkGhPages
+#markdown: kramdown
+#kramdown:
+#    input: GFM
 highlighter: rouge
 paginate: 10
 lsi: false
