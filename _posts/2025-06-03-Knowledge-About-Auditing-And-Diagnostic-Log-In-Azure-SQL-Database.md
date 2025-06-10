@@ -15,6 +15,7 @@ This blog serves as a FAQ for Auditing and Diagnostic logs related to Azure SQL 
 Audit events are written to Log Analytics workspace defined during auditing configuration, to the AzureDiagnostics table with the category SQLSecurityAuditEvents, and table with the category DevOpsOperationsAudit for Microsoft Support Operations.
 
 [Audit log fields](https://learn.microsoft.com/en-us/azure/azure-sql/database/audit-log-format?view=azuresql#subheading-1) provided the schema of auditing log in Log Analytics.
+[Details of telemetry available for Diagnostic logs for Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/metrics-diagnostic-telemetry-logging-streaming-export-configure?view=azuresql&tabs=azure-portal#basic-logs) provided the schema of different category for Diagnostic log in Log Analytics.
 
 <details><summary><strong>Expand to check sample queries in LAW</strong></summary>
 
@@ -64,6 +65,75 @@ AzureDiagnostics
 | where action_id_s in('DBAF')
 | project-reorder event_time_t,action_id_s,succeeded_s,server_principal_name_s,client_ip_s,application_name_s,client_tls_version_name_s,database_name_s,host_name_s,additional_information_s
 | order by event_time_t desc
+```
+
+- Check Database Diagnostic log for Timeouts
+
+```
+AzureDiagnostics
+| where Category == "Timeouts"
+| where ResourceId == '/SUBSCRIPTIONS/799C164D-xxxx-42DA-8658-489CBFE60EDE/RESOURCEGROUPS/SQL/PROVIDERS/MICROSOFT.SQL/SERVERS/SQLSERVERSEA-xxxx/DATABASES/xxxx'
+| project TimeGenerated,error_state_d,query_hash_s,query_plan_hash_s
+
+```
+
+- Check Database Diagnostic log for Blockings
+
+```
+AzureDiagnostics
+| where Category == "Blocks"
+| where ResourceId == '/SUBSCRIPTIONS/799C164D-xxxx-42DA-8658-489CBFE60EDE/RESOURCEGROUPS/SQL/PROVIDERS/MICROSOFT.SQL/SERVERS/SQLSERVERSEA-xxxx/DATABASES/xxxx'
+| project TimeGenerated,lock_mode_s,resource_owner_type_s,blocked_process_filtered_s,duration_d
+
+```
+
+- Check Database Diagnostic log for DatabaseWaitStatistics
+
+```
+AzureDiagnostics
+| where Category == "DatabaseWaitStatistics"
+| where ResourceId == '/SUBSCRIPTIONS/799C164D-xxxx-42DA-8658-489CBFE60EDE/RESOURCEGROUPS/SQL/PROVIDERS/MICROSOFT.SQL/SERVERS/SQLSERVERSEA-xxxx/DATABASES/xxxx'
+| project TimeGenerated,start_utc_date_t,end_utc_date_t,wait_type_s,delta_max_wait_time_ms_d,delta_signal_wait_time_ms_d,delta_wait_time_ms_d,delta_waiting_tasks_count_d
+```
+
+- Check Database Diagnostic log for QueryStoreWaitStatistics
+
+```
+AzureDiagnostics
+| where Category == "QueryStoreWaitStatistics"
+| where ResourceId == '/SUBSCRIPTIONS/799C164D-xxxx-42DA-8658-489CBFE60EDE/RESOURCEGROUPS/SQL/PROVIDERS/MICROSOFT.SQL/SERVERS/SQLSERVERSEA-xxxx/DATABASES/xxxx'
+| extend interval_start_time_date = interval_start_time_d / 4294967296
+| extend interval_start_time_time = interval_start_time_d - 4294967296 * interval_start_time_date
+| extend qdsStatsIntervalStart = datetime(1900-1-1) + time(1d) * interval_start_time_date + time(1s) * (interval_start_time_time / 300.0)
+| extend interval_end_time_date = interval_end_time_d / 4294967296
+| extend interval_end_time_time = interval_end_time_d - 4294967296 * interval_end_time_date
+| extend qdsStatsIntervalEnd = datetime(1900-1-1) + time(1d) * interval_end_time_date + time(1s) * (interval_end_time_time / 300.0)
+| project TimeGenerated,LogicalServerName_s,DatabaseName_s,query_hash_s,is_primary_b,qdsStatsIntervalStart,qdsStatsIntervalEnd,exec_type_d,wait_category_s,count_executions_d,total_query_wait_time_ms_d,max_query_wait_time_ms_d,is_parameterizable_s,statement_type_s,query_id_d,statement_key_hash_s,plan_id_d,query_param_type_d,statement_sql_handle_s
+```
+
+- Check Database Diagnostic log for QueryStoreRuntimeStatistics
+
+```
+AzureDiagnostics
+| where Category == "QueryStoreRuntimeStatistics"
+| where ResourceId == '/SUBSCRIPTIONS/799C164D-xxxx-42DA-8658-489CBFE60EDE/RESOURCEGROUPS/SQL/PROVIDERS/MICROSOFT.SQL/SERVERS/SQLSERVERSEA-xxxx/DATABASES/xxxx'
+| extend interval_start_time_date = interval_start_time_d / 4294967296
+| extend interval_start_time_time = interval_start_time_d - 4294967296 * interval_start_time_date
+| extend qdsStatsIntervalStart = datetime(1900-1-1) + time(1d) * interval_start_time_date + time(1s) * (interval_start_time_time / 300.0)
+| extend interval_end_time_date = interval_end_time_d / 4294967296
+| extend interval_end_time_time = interval_end_time_d - 4294967296 * interval_end_time_date
+| extend qdsStatsIntervalEnd = datetime(1900-1-1) + time(1d) * interval_end_time_date + time(1s) * (interval_end_time_time / 300.0)
+| project  TimeGenerated,LogicalServerName_s,DatabaseName_s,query_hash_s,query_plan_hash_s,is_primary_b,qdsStatsIntervalStart,qdsStatsIntervalEnd,cpu_time_d,max_cpu_time_d,count_executions_d,dop_d,rowcount_d,max_rowcount_d,query_max_used_memory_d,max_query_max_used_memory_d,duration_d,max_duration_d,log_bytes_used_d,max_log_bytes_used_d,execution_type_d,query_id_d,plan_id_d,statement_sql_handle_s,logical_io_reads_d,logical_io_writes_d,max_logical_io_reads_d,max_logical_io_writes_d,physical_io_reads_d,max_physical_io_reads_d
+```
+
+- Check Database Diagnostic log for AutomaticTunning
+
+```
+AzureDiagnostics
+| where Category == "AutomaticTuning"
+| where ResourceId == '/SUBSCRIPTIONS/799C164D-xxxx-42DA-8658-489CBFE60EDE/RESOURCEGROUPS/SQL/PROVIDERS/MICROSOFT.SQL/SERVERS/SQLSERVERSEA-xxxx/DATABASES/xxxx'
+| project TimeGenerated,OptionName_s,OptionDesiredState_s,OptionActualState_s,OptionDisableReason_s,IsDisabledBySystem_d,DatabaseDesiredMode_s,DatabaseActualMode_s
+| summarize StartTime=min(TimeGenerated),EndTime=max(TimeGenerated) by OptionName_s,OptionDesiredState_s,OptionActualState_s,OptionDisableReason_s,IsDisabledBySystem_d,DatabaseDesiredMode_s,DatabaseActualMode_s
 ```
 
 </details>
@@ -140,7 +210,7 @@ The path pattern should be  \<Storage_endpoint\>\<Container\>\<ServerName\>/\<Da
 - The storage endpoint contains https://\<storagename\>.blob.core.windows.net and we can get the storage name in the audit settings.
 - The container name is fixed to sqldbauditlogs.
 - Server Name is the name of your logic server.
-- AuditName has four possible options:
+- AuditName has four possible options and it depends on Auditing Policy and retention policy:
 
     | Auditing Policy | Retention | AuditName                             |
     |-----------------|-----------|---------------------------------------|
