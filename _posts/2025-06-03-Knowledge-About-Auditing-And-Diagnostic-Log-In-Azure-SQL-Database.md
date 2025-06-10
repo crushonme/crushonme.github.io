@@ -165,7 +165,7 @@ AzureDiagnostics
   > NOTES
   >
   > Enabling the Audit category in the diagnostic settings for Azure SQL Database does not activate auditing for the database. To enable database auditing, you have to enable it from the auditing blade for Azure Database.
-  > ***It means we need to enable Database-Level Auditing for "SQL security Audit Event" and "Devops operations Audit Logs".***
+  > ***It means we need to enable Database-Level Auditing and store to LAW or Event HUB for "SQL security Audit Event" and "Devops operations Audit Logs".***
   >
   > Reference: [How to enable Auditing in Azure SQL Databases to Storage account and store logs in JSON format](https://techcommunity.microsoft.com/blog/azuresqlblog/how-to-enable-auditing-in-azure-sql-databases-to-storage-account-and-store-logs-/4407354)
 
