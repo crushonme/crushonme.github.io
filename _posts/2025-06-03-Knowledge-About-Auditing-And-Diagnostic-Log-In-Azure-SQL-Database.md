@@ -261,6 +261,20 @@ FROM sys. fn_get_audit_file_v2(
     DEFAULT,
     '2023-11-17T08:40:40Z',
     '2023-11-17T09:10:40Z')
+WHERE database_name ='dbname'
+```
+
+### Check all login information from server-level auditing log for specific database between 2025-06-17T00:00:00Z and 2025-06-17T07:44:40Z.
+
+```sql
+SELECT  *
+FROM sys. fn_get_audit_file_v2(
+    'https://<storage_account>.blob.core.windows.net/sqldbauditlogs/servername/master/SqlDbAuditing_ServerAudit/',
+    DEFAULT,
+    DEFAULT,
+    '2025-06-17T00:00:00Z',
+    '2025-06-17T07:44:40Z')
+WHERE (action_id = 'DBAS' or action_id='DBAF') and database_name ='dbname'
 ```
 
 </details>
