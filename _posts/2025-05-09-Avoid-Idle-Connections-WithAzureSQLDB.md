@@ -80,15 +80,14 @@ Connections within the *minIdle* count in the connection pool will perform a kee
 >
 > Make sure that the value of *minEvictableIdleTimeMillis* and *timeBetweenEvictionRunsMillis* is less than ***half of 1800000***.
 
-
 ## Sqlalchemy
 
 [Setting Pool Recycle](https://docs.sqlalchemy.org/en/14/core/pooling.html#setting-pool-recycle)
 
 *pool_recycle* prevents the pool from using a particular connection that has passed a certain age, and is appropriate for database backends such as MySQL that automatically close connections that have been stale after a particular period of time.
 
-```
+```python
 from sqlalchemy import create_engine
 
-e = create_engine("mssql+pyodbc://xxxx.database.windows.net:1433/test?driver=ODBC+Driver+17+for+SQL+Server", pool_recycle=3600)
+e = create_engine("mssql+pyodbc://xxxx.database.windows.net:1433/test?driver=ODBC+Driver+17+for+SQL+Server", pool_recycle=1800)
 ```
